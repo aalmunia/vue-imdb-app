@@ -8,11 +8,15 @@ var app = new Vue({
     movies: [],
     totalMovies: 0,    
     elementsPerPage: 10,
-    movieSearchText: ''
+    movieSearchText: '',
+    lastSearchURL: ''
   },
   methods: {
-    httpGETRequest() {
+    httpGETRequest(numPage = 0) {
         let urlSearch = urlOMDB + '&s=' + this.movieSearchText;
+        if(numPage !== 0) {
+            urlSearch += '&page=' + numPage;
+        }
         fetch(urlSearch)
         .then((response) => {
             return response.json();
@@ -24,9 +28,12 @@ var app = new Vue({
         })
         .finally(() => {
             console.log('Fetch OMDB API OK');
+            this.lastSearchURL = urlSearch;
         });
     },
-    httpPOSTRequest() {}
+    nextPage(numPage) {
+        this.httpGETRequest(numPage);        
+    }
   },
   computed: {
     totals() {
@@ -53,6 +60,9 @@ var app = new Vue({
         } else {
             return 0;
         }
+    },
+    pagesIterator() {
+        return new Array(this.totalPages);
     }
   }
 });

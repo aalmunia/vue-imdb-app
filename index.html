@@ -26,6 +26,11 @@
                     </span>                    
                 </div>
             </div>
+            <div v-show="totalMovies > 0">
+                <div v-for="(element, index) in pagesIterator">
+                    <button v-on:click="nextPage(index)">{{ index + 1 }}</button>                    
+                </div>
+            </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="./index.js"></script>
