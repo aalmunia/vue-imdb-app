@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>    
+    <head>
+        <meta charset="utf-8">
+        <title>OMDB Application</title>
+        <link rel="stylesheet" href="./index.css">
+    </head>
+    <body>
+        <div id="app">
+            <input type="text" v-model="movieSearchText" placeholder="Nombre de película..." />
+            <button v-on:click="httpGETRequest" v-bind:disabled="!allowSearch">Buscar película</button>
+            <br/>
+            <span v-show="totalMovies > 0" class="total-data-span">{{ totals }}</span>
+            <div v-show="totalMovies > 0" class="cards-container">
+                <div class="movie-card" v-for="(movie, movieIndex) in movies">
+                    <span class="movie-card-image">
+                        <img class="movie-card-image-poster" :src="(movie.Poster !== 'N/A') ? movie.Poster : './nodata.gif'" />
+                    </span>
+                    <span class="movie-card-data">
+                        <ul class="movie-card-data-details">
+                            <li>Título: {{ movie.Title }}</li>
+                            <li>Año emisión: {{ movie.Year }}</li>
+                            <li>Tipo: {{ movie.Type }}</li>
+                            <li>ID IMDB: {{ movie.imdbID }}</li>
+                        </ul>                        
+                    </span>                    
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="./index.js"></script>
+    </body>
+</html>
